@@ -1,49 +1,53 @@
-package main.java.quizz.repository;
+package quizz.repository;
 
-import java.util.UUID;
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
-import main.java.quizz.domain.Alternativa;
-import main.java.quizz.domain.Pergunta;
+import quizz.domain.Alternativa;
+import quizz.domain.Pergunta;
 
-public class PerguntaRepository implements DataService {
-    protected List<Pergunta> listaDePerguntas = new ArrayList<>();
+public class PerguntaRepository {
+    private DataService dataService;
+    private static PerguntaRepository instance;
 
-    @Override
-    public void criarAlternativas(UUID id, Alternativa alternativa) {
-        getPerguntaAtual(id).getAlternativas().add(alternativa);
-        
+    private PerguntaRepository(DataService dataService) {
+        this.dataService = dataService;
     }
 
-    @Override
-    public void criarPergunta(Pergunta pergunta) {
-        listaDePerguntas.add(pergunta);
-        
+    public static PerguntaRepository getInstance() {
+        if (instance == null) {
+            instance = new PerguntaRepository(new InMemoryDataService());
+        }
+
+        return instance;
     }
 
-    @Override
-    public void editarPergunta(Pergunta pergunta) {
-        int indiceDaTarefa = getPergunta().indexOf(pergunta);
-        getPergunta().set(indiceDaTarefa, pergunta);
-        
+    public void setRepository(DataService dataService) {
+        this.dataService = dataService;
     }
 
-    @Override
-    public List<Pergunta> getPergunta() {
-        return listaDePerguntas;
+    public void criarNovaPergunta(Pergunta p) {
+        dataService.criarPergunta(p);
     }
 
-    @Override
-    public Pergunta getPerguntaAtual(UUID id) {
-        Optional Pergunta = getPergunta().stream().filter(p -> p.getId().equals(id)).findFirst();
-        return Pergunta.isPresent() ? Pergunta.get() : null;
+    // REVISAR O METODO DE CRIAR ALTERNATIVA!
+    public void criarNovaAlternativa(UUID id, Alternativa alternativa) {
+        dataService.criarAlternativas(id, alternativa);
     }
 
-    @Override
-    public void removerPergunta(Pergunta pergunta) {
-        getPergunta().remove(pergunta);
-        
+    public void editarPergunta(Pergunta p) {
+        dataService.editarPergunta(p);
     }
 
+    public void removerPergunta(Pergunta p) {
+        dataService.removerPergunta(p);
+    }
+
+    public Pergunta getPergunta(UUID id) {
+        return dataService.getPergunta(id);
+    }
+
+    public List<Pergunta> listaDePerguntas() {
+        return dataService.listaPerguntas();
+    }
 }

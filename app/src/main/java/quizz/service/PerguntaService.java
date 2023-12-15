@@ -1,21 +1,40 @@
-package main.java.quizz.service;
+package quizz.service;
 
-import main.java.quizz.domain.Alternativa;
-import main.java.quizz.repository.PerguntaRepository;
+import java.util.List;
+import java.util.UUID;
+
+import quizz.domain.Alternativa;
+import quizz.domain.Pergunta;
+import quizz.repository.PerguntaRepository;
 
 public class PerguntaService {
-    private PerguntaRepository perguntaRepository;
-    private Pergunta pergunta;
+    private final PerguntaRepository repository;
 
-    public Pergunta getPergunta() {
-        return pergunta;
+    public PerguntaService(PerguntaRepository repository) {
+        this.repository = repository;
     }
 
-    public void setPergunta(Pergunta pergunta) {
-        this.pergunta = pergunta;
+    public void criarPergunta(String enunciado, int pontuacao) {
+        repository.criarNovaPergunta(new Pergunta(enunciado, pontuacao));
     }
 
-    public void criarPergunta(String enunciado, List<Alternativa> alternativa, int pontuacao) {
-        
+    public void criarAlternativa(UUID id, String comando, boolean correta) {
+        repository.criarNovaAlternativa(id, new Alternativa(comando, correta));
+    }
+
+    public void editarPergunta(Pergunta p) {
+        repository.editarPergunta(p);
+    }
+
+    public void removerPergunta(Pergunta p) {
+        repository.removerPergunta(p);
+    }
+
+    public Pergunta getPergunta(UUID id) {
+        return repository.getPergunta(id);
+    }
+
+    public List<Pergunta> listaDePerguntas() {
+        return repository.listaDePerguntas();
     }
 }

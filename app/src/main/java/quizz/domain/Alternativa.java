@@ -1,4 +1,4 @@
-package main.java.quizz.domain;
+package quizz.domain;
 
 public class Alternativa {
     private String comando;

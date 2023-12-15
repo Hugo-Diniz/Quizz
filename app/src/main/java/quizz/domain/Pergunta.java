@@ -1,6 +1,8 @@
-package main.java.quizz.domain;
+package quizz.domain;
 
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Pergunta {
@@ -10,10 +12,10 @@ public class Pergunta {
     private UUID id;
 
     
-    public Pergunta(String enunciado, List<Alternativa> alternativas, int pontuacao) {
+    public Pergunta(String enunciado, int pontuacao) {
         this.id = UUID.randomUUID();
         this.enunciado = enunciado;
-        this.alternativas = alternativas;
+        this.alternativas = new ArrayList<>();
         this.pontuacao = pontuacao;
     }
     

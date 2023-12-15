@@ -1,6 +1,6 @@
-package main.java.quizz.controller;
+package quizz.controller;
 
-import main.java.quizz.domain.Pergunta;
+import quizz.domain.Pergunta;
 
 public class Gerenciador {
     /*Criar o metodo de jogar;
