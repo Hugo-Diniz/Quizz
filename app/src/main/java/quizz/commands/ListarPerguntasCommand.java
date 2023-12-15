@@ -6,7 +6,6 @@ import quizz.domain.Pergunta;
 import quizz.repository.PerguntaRepository;
 import quizz.service.PerguntaService;
 
-// COMANDO SUSCETÍVEL EM SER DELETADO!
 public class ListarPerguntasCommand implements Command {
 
     @Override
@@ -17,9 +16,13 @@ public class ListarPerguntasCommand implements Command {
         System.out.println("LISTA DE PERGUNTAS:");
         
         List<Pergunta> listaPerguntas = perguntaService.listaDePerguntas();
-        for (Pergunta p: listaPerguntas) {
-            int indice = listaPerguntas.indexOf(p);
-            System.out.printf("%d - %s;%n", indice + 1, perguntaService.listaDePerguntas().get(indice).getEnunciado());
+        if (!listaPerguntas.isEmpty()) {
+            for (Pergunta p: listaPerguntas) {
+                int indice = listaPerguntas.indexOf(p);
+                System.out.printf("%d - %s;%n", indice + 1, perguntaService.listaDePerguntas().get(indice).getEnunciado());
+            }
+        } else {
+            System.out.println("Nenhuma pergunta para listar!");
         }
 
         System.out.println("=======================");

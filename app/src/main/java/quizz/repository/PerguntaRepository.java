@@ -2,8 +2,6 @@ package quizz.repository;
 
 import java.util.List;
 import java.util.UUID;
-
-import quizz.domain.Alternativa;
 import quizz.domain.Pergunta;
 
 public class PerguntaRepository {
@@ -18,7 +16,6 @@ public class PerguntaRepository {
         if (instance == null) {
             instance = new PerguntaRepository(new InMemoryDataService());
         }
-
         return instance;
     }
 
@@ -29,12 +26,7 @@ public class PerguntaRepository {
     public void criarNovaPergunta(Pergunta p) {
         dataService.criarPergunta(p);
     }
-
-    // REVISAR O METODO DE CRIAR ALTERNATIVA!
-    public void criarNovaAlternativa(UUID id, Alternativa alternativa) {
-        dataService.criarAlternativas(id, alternativa);
-    }
-
+    
     public void editarPergunta(Pergunta p) {
         dataService.editarPergunta(p);
     }
@@ -43,11 +35,16 @@ public class PerguntaRepository {
         dataService.removerPergunta(p);
     }
 
+    public List<Pergunta> listaDePerguntas() {
+        return dataService.listaPerguntas();
+    }
+    
+    public List<Pergunta> buscarPergunta(String termo) {
+        return dataService.buscarPergunta(termo);
+    }
+    
     public Pergunta getPergunta(UUID id) {
         return dataService.getPergunta(id);
     }
 
-    public List<Pergunta> listaDePerguntas() {
-        return dataService.listaPerguntas();
-    }
 }

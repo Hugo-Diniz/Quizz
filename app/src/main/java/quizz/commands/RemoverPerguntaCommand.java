@@ -5,8 +5,7 @@ import java.util.List;
 import quizz.domain.Pergunta;
 import quizz.repository.PerguntaRepository;
 import quizz.service.PerguntaService;
-import quizz.validator.PontuacaoValidator;
-import quizz.validator.SelecionarPerguntaIndiceValidator;
+import quizz.validator.IndiceValidator;
 import quizz.validator.ValidationContext;
 
 public class RemoverPerguntaCommand implements Command {
@@ -21,17 +20,20 @@ public class RemoverPerguntaCommand implements Command {
        List<Pergunta> listaPerguntas = perguntaService.listaDePerguntas();
        
        if (!listaPerguntas.isEmpty()) {
-           for (Pergunta p: listaPerguntas) {
+            for (Pergunta p: listaPerguntas) {
                int index = listaPerguntas.indexOf(p);
-               System.out.printf("%d - %s;%n", index + 1, perguntaService.listaDePerguntas().get(index).getEnunciado());
+               System.out.printf("%d - %s\n", index + 1, perguntaService.listaDePerguntas().get(index).getEnunciado());
             }
-            ValidationContext<Integer> intValidationContext = new ValidationContext<>(new SelecionarPerguntaIndiceValidator(1,listaPerguntas.size()));
-            Integer indice = intValidationContext.getValidValue("Selecione a pergunta: ", "Digite um valor válido!", Integer.class);
+            
+            ValidationContext<Integer> intValidationContext = new ValidationContext<>(new IndiceValidator(listaPerguntas.size(),1));
+            int indice = intValidationContext.getValidValue("Selecione a pergunta: ", "Digite um valor válido!", Integer.class);
             
             Pergunta perguntaSelecionada = listaPerguntas.get(indice - 1);
             perguntaService.removerPergunta(perguntaSelecionada);
-            System.out.printf("A pergunta %d foi removida com sucesso!%n", indice);
+            System.out.println("Pergunta removida com sucesso!");
             System.out.println("=======================");
+       } else {
+           System.out.println("Nenhuma pergunta para remover!");
        }
 
     }

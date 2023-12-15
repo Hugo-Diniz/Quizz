@@ -1,6 +1,5 @@
 package quizz.repository;
 
-import quizz.domain.Alternativa;
 import quizz.domain.Pergunta;
 import java.util.UUID;
 import java.util.List;
@@ -8,11 +7,10 @@ import java.util.List;
 public interface DataService {
     void criarPergunta(Pergunta pergunta);
     void editarPergunta(Pergunta pergunta);
-    void criarAlternativas(UUID id, Alternativa alternativa);
     void removerPergunta(Pergunta pergunta);
+    List<Pergunta> listaPerguntas();
+    List<Pergunta> buscarPergunta(String termo);
 
-    public Pergunta getPergunta(UUID id);
-    public List<Pergunta> listaPerguntas();
-    
+    Pergunta getPergunta(UUID id);
 } 
     

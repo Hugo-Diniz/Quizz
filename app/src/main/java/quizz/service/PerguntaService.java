@@ -14,27 +14,28 @@ public class PerguntaService {
         this.repository = repository;
     }
 
-    public void criarPergunta(String enunciado, int pontuacao) {
-        repository.criarNovaPergunta(new Pergunta(enunciado, pontuacao));
+    public void criarPergunta(String enunciado, List<Alternativa> alternativas, int pontuacao) {
+        repository.criarNovaPergunta(new Pergunta(enunciado, alternativas, pontuacao));
     }
 
-    public void criarAlternativa(UUID id, String comando, boolean correta) {
-        repository.criarNovaAlternativa(id, new Alternativa(comando, correta));
-    }
-
-    public void editarPergunta(Pergunta p) {
-        repository.editarPergunta(p);
+    public void editarPergunta(UUID id, String enunciado, List<Alternativa> alternativas, int pontuacao) {
+        repository.editarPergunta(new Pergunta(getPergunta(id).getId(), enunciado, alternativas, pontuacao));
     }
 
     public void removerPergunta(Pergunta p) {
         repository.removerPergunta(p);
     }
 
+    public List<Pergunta> listaDePerguntas() {
+        return repository.listaDePerguntas();
+    }
+    
+    public List<Pergunta> buscarPergunta(String termo) {
+        return repository.buscarPergunta(termo);
+    }
+    
     public Pergunta getPergunta(UUID id) {
         return repository.getPergunta(id);
     }
 
-    public List<Pergunta> listaDePerguntas() {
-        return repository.listaDePerguntas();
-    }
 }

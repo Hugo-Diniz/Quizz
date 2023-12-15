@@ -7,15 +7,21 @@ import java.util.Objects;
 
 public class Pergunta {
     private String enunciado;
-    private List<Alternativa> alternativas;
+    private List<Alternativa> alternativas = new ArrayList<>();
     private int pontuacao;
     private UUID id;
-
     
-    public Pergunta(String enunciado, int pontuacao) {
+    public Pergunta(String enunciado, List<Alternativa> alternativas, int pontuacao) {
         this.id = UUID.randomUUID();
         this.enunciado = enunciado;
-        this.alternativas = new ArrayList<>();
+        this.alternativas = alternativas;
+        this.pontuacao = pontuacao;
+    }
+    
+    public Pergunta(UUID id, String enunciado, List<Alternativa> alternativas, int pontuacao) {
+        this.id = id;
+        this.enunciado = enunciado;
+        this.alternativas = alternativas;
         this.pontuacao = pontuacao;
     }
     

@@ -1,11 +1,11 @@
 package quizz.validator;
 
-public class SelecionarPerguntaIndiceValidator implements Validator<Integer> {
+public class IndiceValidator implements Validator<Integer> {
     
     private int valorMax;
     private int valorMin;
 
-    public SelecionarPerguntaIndiceValidator(int max, int min) {
+    public IndiceValidator(int max, int min) {
         this.valorMax = max;
         this.valorMin = min;
     }
