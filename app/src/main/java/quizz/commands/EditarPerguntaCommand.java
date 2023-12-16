@@ -2,6 +2,7 @@ package quizz.commands;
 
 import java.util.List;
 import java.util.Scanner;
+import quizz.domain.Alternativa;
 import quizz.domain.Pergunta;
 import quizz.repository.PerguntaRepository;
 import quizz.service.PerguntaService;
@@ -15,7 +16,7 @@ public class EditarPerguntaCommand implements Command {
     public void execute() {
         PerguntaService perguntaService = new PerguntaService(PerguntaRepository.getInstance());
 
-        System.out.println("=======================");
+        System.out.println("\n=================================");
         System.out.println("Editar Pergunta:");
         
         ValidationContext<String> strValidationContext = new ValidationContext<>(new NonEmptyValidator());
@@ -24,8 +25,8 @@ public class EditarPerguntaCommand implements Command {
         List<Pergunta> listaDePerguntas = perguntaService.buscarPergunta(termo);
         
         if (!listaDePerguntas.isEmpty()) {
+            int i = 0;
             for (Pergunta pergunta : listaDePerguntas) {
-                int i = 0;
                 System.out.printf("%d. %s\n", i+1, pergunta.getEnunciado());
                 i++;
             }
@@ -36,37 +37,38 @@ public class EditarPerguntaCommand implements Command {
             
             System.out.print("Digite um novo enunciado (ou deixe vazio para não alterar): ");
             String novoEnunciado = new Scanner(System.in).nextLine();
-            // perguntaSelecionada.getAlternativas().size()-1 é o correto, aparentemente
-            for (int i = 0; i < (perguntaSelecionada.getAlternativas().size()-1); i++) {
-                System.out.println(perguntaSelecionada.getAlternativas().size());
-                System.out.println(perguntaSelecionada.getAlternativas().get(i).getComando());
+            
+            System.out.println("\nAs alternativas da pergunta são: ");
+            int indiceAlternativasDaPergunta = 0;
+            for (Alternativa alternativa : perguntaSelecionada.getAlternativas()) {
+                System.out.printf("%d. %s\n", indiceAlternativasDaPergunta+1,alternativa.getComando());
+                indiceAlternativasDaPergunta++;
             }
-            System.out.println("[1] Editar as alternativas\n[2] Editar a alternativa correta");
+            System.out.print("[1] Editar as alternativas\n[2] Editar a alternativa correta\nDigite a opção: ");
             String opcao = new Scanner(System.in).nextLine();
             
             switch(opcao) {
                 case "1" -> {
-                    for (int i = 0; i < perguntaSelecionada.getAlternativas().size(); i++) {
-                        System.out.printf("Edite a alternativa '%s' (ou deixe vazio para não alterar): ", perguntaSelecionada.getAlternativas().get(i).getComando());
+                    for (int j = 0; j < perguntaSelecionada.getAlternativas().size(); j++) {
+                        System.out.printf("Edite a alternativa '%s' (ou deixe vazio para não alterar): ", perguntaSelecionada.getAlternativas().get(j).getComando());
                         String novoComando = new Scanner(System.in).nextLine();
-                        if (novoComando != "") {
-                            perguntaSelecionada.getAlternativas().get(i).setComando(novoComando);
+                        if (!"".equals(novoComando)) {
+                            perguntaSelecionada.getAlternativas().get(j).setComando(novoComando);
                         }
                     }
                     break;
                 }
                 case "2" -> {
-                    for (int i = 0; i < perguntaSelecionada.getAlternativas().size(); i++) {
-                        if (perguntaSelecionada.getAlternativas().get(i).isCorreta()) {
-                            System.out.printf("A atual alternativa correta é:\n %s\n",perguntaSelecionada.getAlternativas().get(i));
+                    for (int k = 0; k < perguntaSelecionada.getAlternativas().size(); k++) {
+                        if (perguntaSelecionada.getAlternativas().get(k).isCorreta()) {
+                            System.out.printf("A atual alternativa correta é:\n%s\n",perguntaSelecionada.getAlternativas().get(k).getComando());
                             
                             intValidationContext.setValidator(new IndiceValidator(perguntaSelecionada.getAlternativas().size(),1));
-                            int indiceAlternativa = intValidationContext.getValidValue("Selecione a pergunta: ", "Digite um valor válido!", Integer.class);
+                            int indiceAlternativa = intValidationContext.getValidValue("Digite o índice da nova alternativa correta (entre 1 e 4): ", "Digite um valor válido!", Integer.class);
                             
-                            if (indiceAlternativa != Integer.valueOf("")) {
-                                perguntaSelecionada.getAlternativas().get(i).setCorreta(false);
-                                perguntaSelecionada.getAlternativas().get(indiceAlternativa).setCorreta(true);
-                            }
+                            perguntaSelecionada.getAlternativas().get(k).setCorreta(false);
+                            perguntaSelecionada.getAlternativas().get(indiceAlternativa - 1).setCorreta(true);
+                            break;
                         }
                     }
                     break;
@@ -78,14 +80,14 @@ public class EditarPerguntaCommand implements Command {
             }
             
             System.out.print("Digite uma nova pontuação para a pergunta (ou deixe vazio para não editar): ");
-            int novaPontuacao = new Scanner(System.in).nextInt();
+            String novaPontuacao = new Scanner(System.in).nextLine();
             
-            if (novoEnunciado != "") {
+            if (!"".equals(novoEnunciado)) {
                 perguntaSelecionada.setEnunciado(novoEnunciado);
             }
             
-            if (novaPontuacao != Integer.valueOf("")) {
-                perguntaSelecionada.setPontuacao(novaPontuacao);
+            if (!"".equals(novaPontuacao)) {
+                perguntaSelecionada.setPontuacao(Integer.parseInt(novaPontuacao));
             }
             
             perguntaService.editarPergunta(perguntaSelecionada.getId(), perguntaSelecionada.getEnunciado(), perguntaSelecionada.getAlternativas(), perguntaSelecionada.getPontuacao());

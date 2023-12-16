@@ -16,7 +16,7 @@ public class CriarPerguntaCommand implements Command {
     public void execute() {
         PerguntaService perguntaService = new PerguntaService(PerguntaRepository.getInstance());
 
-        System.out.println("=======================");
+        System.out.println("\n=================================");
         System.out.println("Criar Pergunta:");
         
         ValidationContext<String> strValidationContext = new ValidationContext<>(new NonEmptyValidator());
@@ -41,9 +41,10 @@ public class CriarPerguntaCommand implements Command {
             if (indice == alternativaCorreta - 1) {
                 Alternativa alternativa = new Alternativa(comandosDeAlternativas.get(indice), true);
                 listaDeAlternativas.add(alternativa);
+            } else {
+                Alternativa alternativa = new Alternativa(comandosDeAlternativas.get(indice), false);
+                listaDeAlternativas.add(alternativa);
             }
-            Alternativa alternativa = new Alternativa(comandosDeAlternativas.get(indice), false);
-            listaDeAlternativas.add(alternativa);
         }
         
         intValidationContext.setValidator(new PontuacaoValidator());
@@ -51,7 +52,7 @@ public class CriarPerguntaCommand implements Command {
         
         perguntaService.criarPergunta(enunciado, listaDeAlternativas, pontuacao);
         System.out.println("Pergunta criada com sucesso!");
-        System.out.println("=======================");
+        System.out.println("\n=================================");
     }
     
 }

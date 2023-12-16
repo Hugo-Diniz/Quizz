@@ -14,7 +14,7 @@ public class RemoverPerguntaCommand implements Command {
     public void execute() {
        PerguntaService perguntaService = new PerguntaService(PerguntaRepository.getInstance());
 
-       System.out.println("=======================");
+       System.out.println("\n=================================");
        System.out.println("REMOVER PERGUNTA:");
        
        List<Pergunta> listaPerguntas = perguntaService.listaDePerguntas();
@@ -31,7 +31,7 @@ public class RemoverPerguntaCommand implements Command {
             Pergunta perguntaSelecionada = listaPerguntas.get(indice - 1);
             perguntaService.removerPergunta(perguntaSelecionada);
             System.out.println("Pergunta removida com sucesso!");
-            System.out.println("=======================");
+            System.out.println("\n=================================");
        } else {
            System.out.println("Nenhuma pergunta para remover!");
        }
