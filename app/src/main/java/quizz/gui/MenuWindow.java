@@ -1,21 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package quizz.gui;
 
-/**
- *
- * @author Hugo Diniz
- */
-public class MenuWindow extends javax.swing.JFrame {
+import javax.swing.JOptionPane;
+import quizz.repository.FileDataService;
+import quizz.repository.PerguntaRepository;
+import quizz.service.PerguntaService;
 
-    /**
-     * Creates new form MenuWindow
-     */
+public class MenuWindow extends javax.swing.JFrame {
+    private PerguntaService service;
+    private final PerguntaRepository repository;
+
     public MenuWindow() {
         initComponents();
         this.setLocationRelativeTo(null);
+        repository = PerguntaRepository.getInstance();
+        repository.setRepository(new FileDataService());
+        service = new PerguntaService(repository);
     }
 
     /**
@@ -37,6 +36,7 @@ public class MenuWindow extends javax.swing.JFrame {
         removerButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Quizz");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -61,7 +61,7 @@ public class MenuWindow extends javax.swing.JFrame {
 
         jogarButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jogarButton.setText("JOGAR");
-        jogarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jogarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jogarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jogarButtonActionPerformed(evt);
@@ -69,8 +69,8 @@ public class MenuWindow extends javax.swing.JFrame {
         });
 
         historicoButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        historicoButton.setText("HIST�RICO");
-        historicoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        historicoButton.setText("HISTÓRICO");
+        historicoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         historicoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 historicoButtonActionPerformed(evt);
@@ -79,7 +79,7 @@ public class MenuWindow extends javax.swing.JFrame {
 
         criarButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         criarButton.setText("CRIAR");
-        criarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        criarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         criarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 criarButtonActionPerformed(evt);
@@ -88,7 +88,7 @@ public class MenuWindow extends javax.swing.JFrame {
 
         editarButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         editarButton.setText("EDITAR");
-        editarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        editarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         editarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editarButtonActionPerformed(evt);
@@ -97,7 +97,7 @@ public class MenuWindow extends javax.swing.JFrame {
 
         removerButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         removerButton.setText("REMOVER");
-        removerButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        removerButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         removerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removerButtonActionPerformed(evt);
@@ -164,29 +164,33 @@ public class MenuWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jogarButtonActionPerformed
 
     private void historicoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historicoButtonActionPerformed
-        // TODO add your handling code here:
+        if (!service.getHistorico().isEmpty()) {
+            HistoricoWindow historico = new HistoricoWindow();
+            historico.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(historicoButton.getParent(), "Nenhum histórico para mostrar.");
+        }
     }//GEN-LAST:event_historicoButtonActionPerformed
 
     private void criarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarButtonActionPerformed
-        this.setVisible(false);
         CriarPerguntaWindow criarPergunta = new CriarPerguntaWindow();
         criarPergunta.setVisible(true);
     }//GEN-LAST:event_criarButtonActionPerformed
 
     private void editarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarButtonActionPerformed
-        // TODO add your handling code here:
+        EditarPerguntaWindow editar = new EditarPerguntaWindow();
+        editar.setVisible(true);
     }//GEN-LAST:event_editarButtonActionPerformed
 
     private void removerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerButtonActionPerformed
-        this.setVisible(false);
-        RemoverPerguntaWindow remover = new RemoverPerguntaWindow();
-        remover.initTable();
-        remover.setVisible(true);
+        if (!service.listaDePerguntas().isEmpty()) {
+            RemoverPerguntaWindow remover = new RemoverPerguntaWindow();
+            remover.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(removerButton.getParent(), "Nenhuma pergunta para excluir.");
+        }
     }//GEN-LAST:event_removerButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

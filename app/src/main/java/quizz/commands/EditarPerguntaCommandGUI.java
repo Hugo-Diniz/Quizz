@@ -8,12 +8,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import quizz.domain.Alternativa;
+import quizz.domain.Pergunta;
+import quizz.gui.MenuWindow;
 import quizz.repository.PerguntaRepository;
 import quizz.service.PerguntaService;
 import quizz.validator.GUITextValidator;
 import quizz.validator.NonEmptyValidator;
 
-public class CriarPerguntaCommandGUI implements Command {
+public class EditarPerguntaCommandGUI implements Command {
+    private final Pergunta perguntaSelecionada;
     private final JTextField txtEnunciado;
     private final JTextField txtAlternativa1;
     private final JTextField txtAlternativa2;
@@ -23,7 +26,10 @@ public class CriarPerguntaCommandGUI implements Command {
     private final JComboBox alternaticaCorreta;
     private final JFrame frame;
 
-    public CriarPerguntaCommandGUI(JTextField enunciado, JTextField a1, JTextField a2, JTextField a3, JTextField a4, JSlider pontuacao, JComboBox correta, JFrame frame) {
+    private final PerguntaService perguntaService = new PerguntaService(PerguntaRepository.getInstance());
+    
+    public EditarPerguntaCommandGUI(Pergunta pergunta, JTextField enunciado, JTextField a1, JTextField a2, JTextField a3, JTextField a4, JSlider pontuacao, JComboBox correta, JFrame frame) {
+        this.perguntaSelecionada = pergunta;
         this.txtEnunciado = enunciado;
         this.txtAlternativa1 = a1;
         this.txtAlternativa2 = a2;
@@ -34,8 +40,7 @@ public class CriarPerguntaCommandGUI implements Command {
         this.frame = frame;
     }
             
-    private final PerguntaService perguntaService = new PerguntaService(PerguntaRepository.getInstance());
-
+    
     @Override
     public void execute() {
         String enunciado = this.txtEnunciado.getText();
@@ -75,13 +80,17 @@ public class CriarPerguntaCommandGUI implements Command {
 
                 }
             }
-            perguntaService.criarPergunta(enunciado, listaDeAlternativas, valorPontuacao);
+            perguntaSelecionada.setAlternativas(listaDeAlternativas);
+            perguntaSelecionada.setEnunciado(enunciado);
+            perguntaSelecionada.setPontuacao(valorPontuacao);
+            perguntaService.editarPergunta(perguntaSelecionada.getId(), perguntaSelecionada.getEnunciado(), perguntaSelecionada.getAlternativas(), perguntaSelecionada.getPontuacao());
             
-            JOptionPane.showMessageDialog(txtEnunciado.getParent(), "Pergunta Criada com sucesso!");
+            JOptionPane.showMessageDialog(txtEnunciado.getParent(), "Pergunta Editada com sucesso!");
             
             frame.setVisible(false);
         }else {
             JOptionPane.showMessageDialog(txtEnunciado.getParent(), "Por favor preencha as informações corretamente.");
         }
     }
+    
 }

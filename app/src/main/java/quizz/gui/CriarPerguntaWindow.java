@@ -1,31 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package quizz.gui;
 
 import quizz.commands.CommandExecutor;
 import quizz.commands.CriarPerguntaCommandGUI;
-import quizz.repository.FileDataService;
-import quizz.repository.PerguntaRepository;
-import quizz.service.PerguntaService;
 
-/**
- *
- * @author Hugo Diniz
- */
 public class CriarPerguntaWindow extends javax.swing.JFrame {
-    private PerguntaService service;
-    private final PerguntaRepository repository;
     CommandExecutor executor = new CommandExecutor();
-    
     
     public CriarPerguntaWindow() {
         initComponents();
         this.setLocationRelativeTo(null);
-        repository = PerguntaRepository.getInstance();
-        repository.setRepository(new FileDataService());
-        service = new PerguntaService(repository);
     }
 
     /**
@@ -59,7 +42,9 @@ public class CriarPerguntaWindow extends javax.swing.JFrame {
         alternativaCorretaComboBox = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Criar pergunta");
+        setPreferredSize(new java.awt.Dimension(435, 430));
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -82,15 +67,12 @@ public class CriarPerguntaWindow extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel2.setPreferredSize(new java.awt.Dimension(435, 350));
+
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Enunciado:");
 
-        txtEnunciado.setToolTipText("Digite o enunciado da Quest„o");
-        txtEnunciado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEnunciadoActionPerformed(evt);
-            }
-        });
+        txtEnunciado.setToolTipText("Digite o enunciado da Quest√£o");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Alternativas:");
@@ -108,11 +90,11 @@ public class CriarPerguntaWindow extends javax.swing.JFrame {
         jLabel7.setText("D)");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel8.setText("PontuaÁ„o:");
+        jLabel8.setText("Pontua√ß√£o:");
 
         criarButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         criarButton.setText("CRIAR");
-        criarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        criarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         criarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 criarButtonActionPerformed(evt);
@@ -136,7 +118,7 @@ public class CriarPerguntaWindow extends javax.swing.JFrame {
         valorPontuacao.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         alternativaCorretaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A)", "B)", "C)", "D)" }));
-        alternativaCorretaComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        alternativaCorretaComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("Alternativa Correta:");
@@ -148,8 +130,11 @@ public class CriarPerguntaWindow extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(alternativaCorretaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(criarButton))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,10 +164,8 @@ public class CriarPerguntaWindow extends javax.swing.JFrame {
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtAlternativa4, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtAlternativa3, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(valorPontuacao, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel9)
-                            .addComponent(alternativaCorretaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 25, Short.MAX_VALUE)))
+                                    .addComponent(valorPontuacao, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 26, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -219,12 +202,13 @@ public class CriarPerguntaWindow extends javax.swing.JFrame {
                     .addComponent(slidePontuacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(valorPontuacao))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(alternativaCorretaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(criarButton)
-                .addContainerGap())
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(alternativaCorretaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(criarButton))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -232,10 +216,8 @@ public class CriarPerguntaWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator1))
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,7 +227,8 @@ public class CriarPerguntaWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         pack();
@@ -256,18 +239,10 @@ public class CriarPerguntaWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_criarButtonActionPerformed
 
     private void slidePontuacaoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_slidePontuacaoStateChanged
-        // TODO add your handling code here:
         int valorAtual = slidePontuacao.getValue();
         valorPontuacao.setText(String.valueOf(valorAtual));
     }//GEN-LAST:event_slidePontuacaoStateChanged
 
-    private void txtEnunciadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnunciadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEnunciadoActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
