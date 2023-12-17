@@ -7,6 +7,7 @@ import quizz.commands.EditarPerguntaCommand;
 import quizz.commands.JogarCommand;
 import quizz.commands.ListarPerguntasCommand;
 import quizz.commands.RemoverPerguntaCommand;
+import quizz.repository.FileDataService;
 import quizz.repository.PerguntaRepository;
 import quizz.service.PerguntaService;
 
@@ -14,6 +15,8 @@ public class App {
     
     public static void main(String[] args) {
         PerguntaService service = new PerguntaService(PerguntaRepository.getInstance());
+        PerguntaRepository dataService = PerguntaRepository.getInstance();
+        dataService.setRepository(new FileDataService());
         CommandExecutor executor = new CommandExecutor();
         
         Scanner sc = new Scanner(System.in);

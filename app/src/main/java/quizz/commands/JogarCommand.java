@@ -6,6 +6,7 @@ import quizz.repository.PerguntaRepository;
 import quizz.service.PerguntaService;
 import quizz.validator.IndiceValidator;
 import quizz.validator.ValidationContext;
+import java.util.Collections;
 
 public class JogarCommand implements Command {
    
@@ -20,9 +21,11 @@ public class JogarCommand implements Command {
         int pontuacao_total = 0;
         
         if (!perguntaService.listaDePerguntas().isEmpty()) {
+            Collections.shuffle(perguntaService.listaDePerguntas());
             for (Pergunta pergunta : perguntaService.listaDePerguntas()) {
                 System.out.println(pergunta.getEnunciado());
                 int i = 0;
+                Collections.shuffle(pergunta.getAlternativas());
                 for (Alternativa alternativa : pergunta.getAlternativas()) {
                     System.out.printf("%d. %s\n", i+1, alternativa.getComando());
                     i++;

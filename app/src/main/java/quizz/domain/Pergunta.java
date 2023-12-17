@@ -1,15 +1,16 @@
 package quizz.domain;
 
 import java.util.UUID;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Pergunta {
+public class Pergunta implements Serializable {
     private String enunciado;
     private List<Alternativa> alternativas = new ArrayList<>();
     private int pontuacao;
-    private UUID id;
+    private final UUID id;
     
     public Pergunta(String enunciado, List<Alternativa> alternativas, int pontuacao) {
         this.id = UUID.randomUUID();
@@ -48,6 +49,10 @@ public class Pergunta {
     public void setPontuacao(int pontuacao) {
         this.pontuacao = pontuacao;
     }
+
+    public UUID getId() {
+        return id;
+    }
     
     @Override
     public int hashCode() {
@@ -65,9 +70,4 @@ public class Pergunta {
 
         return Objects.equals(getId(), pergunta.getId());
     }
-
-    public UUID getId() {
-        return id;
-    }
-
 }
