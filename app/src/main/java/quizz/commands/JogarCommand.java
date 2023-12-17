@@ -43,6 +43,7 @@ public class JogarCommand implements Command {
                 pontuacao_total += pergunta.getPontuacao(); // pontuação do jogo
             }
             System.out.printf("\nJogo concluído!\nRESULTADO FINAL: %d/%d", pontuacao, pontuacao_total);
+            perguntaService.adcionarPontuacao(pontuacao);
             
         } else {
             System.out.println("Não há perguntas para jogar. Crie algumas perguntas primeiro.");

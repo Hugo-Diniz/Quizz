@@ -38,4 +38,12 @@ public class PerguntaService {
         return repository.getPergunta(id);
     }
 
+    public List<Integer> getHistorico() {
+        return repository.getHistorico();
+    }
+
+    public void adcionarPontuacao(int ponto) {
+        repository.adcionarPontuacao(ponto);
+    }
+
 }

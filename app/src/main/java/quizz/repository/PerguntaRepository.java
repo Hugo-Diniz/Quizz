@@ -47,4 +47,12 @@ public class PerguntaRepository {
         return dataService.getPergunta(id);
     }
 
+    public List<Integer> getHistorico() {
+        return dataService.getHistorico();
+    }
+
+    public void adcionarPontuacao(int ponto) {
+        dataService.adcionarPontuacao(ponto);
+    }
+
 }

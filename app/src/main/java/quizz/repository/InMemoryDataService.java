@@ -8,6 +8,7 @@ import quizz.domain.Pergunta;
 
 public class InMemoryDataService implements DataService {
     protected List<Pergunta> listaDePerguntas = new ArrayList<>();
+    protected List<Integer> historico = new ArrayList<>();
 
     @Override
     public void criarPergunta(Pergunta pergunta) {
@@ -41,6 +42,16 @@ public class InMemoryDataService implements DataService {
         Optional<Pergunta> pergunta = listaPerguntas().stream().filter(p -> 
                 p.getId().equals(id)).findFirst();
         return pergunta.isPresent() ? pergunta.get() : null;
+    }
+
+    @Override
+    public void adcionarPontuacao(int ponto) {
+        historico.add(ponto);
+    }
+
+    @Override
+    public List<Integer> getHistorico() {
+       return historico;
     }
 
 }
