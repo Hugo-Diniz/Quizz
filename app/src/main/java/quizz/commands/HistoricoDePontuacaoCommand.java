@@ -2,6 +2,7 @@ package quizz.commands;
 
 import java.util.List;
 
+import quizz.domain.Pergunta;
 import quizz.repository.PerguntaRepository;
 import quizz.service.PerguntaService;
 
@@ -14,8 +15,14 @@ public class HistoricoDePontuacaoCommand implements Command {
         System.out.println("=============== [HISTÓRICO DE PONTUAÇÃO] ===============");
         List<Integer> historicoPontuacao = perguntaService.getHistorico();
         if (!historicoPontuacao.isEmpty()) {
+            int pontuacaoTotal = 0;
+
+            for (Pergunta pontuacaoPergunta: perguntaService.listaDePerguntas()) {
+                pontuacaoTotal += pontuacaoPergunta.getPontuacao();
+            }
+
             for (Integer pontos: historicoPontuacao) {
-                System.out.printf("%dº - %d;%n", historicoPontuacao.indexOf(pontos) + 1, pontos);
+                System.out.printf("%dº - %d / %d;%n", historicoPontuacao.indexOf(pontos) + 1, pontos, pontuacaoTotal);
             }
         }else {
             System.out.println("Você ainda não realizou nenhuma jogada.");
