@@ -23,16 +23,16 @@ public class App {
         Scanner sc = new Scanner(System.in);
         int opcao = -1;
 
-        while (opcao != 6) {
+        while (opcao != 7) {
             System.out.println("\n=================================");
             System.out.println("MENU QUIZZ");
             System.out.println("[1] - Jogar");
             System.out.println("[2] - Histórico de Pontuação");
             System.out.println("[3] - Criar pergunta");
-            System.out.println("[5] - Editar pergunta");
-            System.out.println("[6] - Listar perguntas");
-            System.out.println("[7] - Excluir pergunta");
-            System.out.println("[8] - Sair");
+            System.out.println("[4] - Editar pergunta");
+            System.out.println("[5] - Listar perguntas");
+            System.out.println("[6] - Excluir pergunta");
+            System.out.println("[7] - Sair");
 
             System.out.print("Digite a opção -> ");
             opcao = sc.nextInt();
