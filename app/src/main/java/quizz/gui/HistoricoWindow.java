@@ -25,8 +25,10 @@ public class HistoricoWindow extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         historicoTable = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Histórico");
         setPreferredSize(new java.awt.Dimension(435, 430));
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Histórico de pontuação");
